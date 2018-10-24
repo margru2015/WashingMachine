@@ -2,15 +2,15 @@ package app;
 
 abstract public class Pralka {
 	
-	private int			program;
-	protected int		maxProgram	= 20;
-	private double		temp;
-	final double		maxTemp		= 90;
-	private int			spinning;
-	final int			maxSpinning	= 1000;
-	protected double	skokTemp	= 0.5;
-	char				stopien		= 186;
-	protected Typ		brand;
+	private int				program;
+	protected int			maxProgram	= 20;
+	private double			temp;
+	final protected double	maxTemp		= 90;
+	private int				spinning;
+	final protected int		maxSpinning	= 1000;
+	protected double		skokTemp	= 0.5;
+	private final char		stopien		= 186;
+	protected Typ			brand;
 	
 	public Pralka() {
 		
@@ -61,13 +61,13 @@ abstract public class Pralka {
 	public void setTemp(double t) {
 		if (t <= maxTemp && t >= 0) {
 			this.temp = roundTemp(t);
-			System.out.println("Ustawiono temperature: " + this.temp + stopien + "C");
+			System.out.println("Ustawiono temperature: " + this.temp + getStopien() + "C");
 		} else if (t > maxTemp) {
 			this.temp = maxTemp;
-			System.out.println("Ustawiono za wysoką temperaturę! Maksymalna temp: " + maxTemp + stopien + "C");
+			System.out.println("Ustawiono za wysoką temperaturę! Maksymalna temp: " + maxTemp + getStopien() + "C");
 		} else if (t < 0) {
 			this.temp = 0;
-			System.out.println("Ustawiono za niską temperaturę! Minimalna temp: " + 0 + stopien + "C");
+			System.out.println("Ustawiono za niską temperaturę! Minimalna temp: " + 0 + getStopien() + "C");
 			
 		}
 	}
@@ -83,9 +83,9 @@ abstract public class Pralka {
 				throw new TempException();
 			}
 			this.temp += skokTemp;
-			System.out.println("Obecna temperatura wynosi: " + this.temp + stopien + "C");
+			System.out.println("Obecna temperatura wynosi: " + this.temp + getStopien() + "C");
 		} catch (TempException e) {
-			System.out.println(e.getMessage() + " Nie można zwiększyć temperatury. Maksymalna temperatura wynosi: " + maxTemp + stopien + "C");
+			System.out.println(e.getMessage() + " Nie można zwiększyć temperatury. Maksymalna temperatura wynosi: " + maxTemp + getStopien() + "C");
 		}
 	}
 	
@@ -95,9 +95,9 @@ abstract public class Pralka {
 				throw new TempException();
 			}
 			this.temp -= skokTemp;
-			System.out.println("Obecna temperatura wynosi: " + this.temp + stopien + "C");
+			System.out.println("Obecna temperatura wynosi: " + this.temp + getStopien() + "C");
 		} catch (TempException e) {
-			System.out.println(e.getMessage() + " Nie można obnizyć temperatury. Minimalna temperatura wynosi: " + 0 + stopien + "C");
+			System.out.println(e.getMessage() + " Nie można obnizyć temperatury. Minimalna temperatura wynosi: " + 0 + getStopien() + "C");
 		}
 	}
 	
@@ -146,7 +146,7 @@ abstract public class Pralka {
 	public void showStatus() {
 		System.out.println("Marka: " + brand);
 		System.out.println("Program: " + getProgram());
-		System.out.println("Temperatura: " + getTemp() + stopien + "C");
+		System.out.println("Temperatura: " + getTemp() + getStopien() + "C");
 		System.out.println("Wirowanie: " + getSpinning());
 		;
 	}
@@ -158,6 +158,10 @@ abstract public class Pralka {
 	
 	public Typ getBrand() {
 		return brand;
+	}
+
+	public char getStopien() {
+		return stopien;
 	}
 	
 }
