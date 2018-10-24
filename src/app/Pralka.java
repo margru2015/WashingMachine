@@ -3,14 +3,14 @@ package app;
 abstract public class Pralka {
 	
 	private int				program;
-	protected int			maxProgram	= 20;
+	private int				maxProgram	= 20;
 	private double			temp;
-	final protected double	maxTemp		= 90;
 	private int				spinning;
-	final protected int		maxSpinning	= 1000;
-	protected double		skokTemp	= 0.5;
-	private final char		stopien		= 186;
-	protected Typ			brand;
+	private double			skokTemp	= 0.5;
+	private Typ				brand;
+	final private int		maxSpinning	= 1000;
+	final private double	maxTemp		= 90;
+	final private char		stopien		= 186;
 	
 	public Pralka() {
 		
@@ -21,12 +21,12 @@ abstract public class Pralka {
 	}
 	
 	public void setProgram(int program) {
-		if (program <= maxProgram && program > 0) {
+		if (program <= getMaxProgram() && program > 0) {
 			this.program = program;
 			System.out.println("Ustawiono program: " + this.program);
-		} else if (program > maxProgram) {
-			this.program = maxProgram;
-			System.out.println("Przekroczono maksymalna liczbe programow. Ustawiono program: " + maxProgram);
+		} else if (program > getMaxProgram()) {
+			this.program = getMaxProgram();
+			System.out.println("Przekroczono maksymalna liczbe programow. Ustawiono program: " + getMaxProgram());
 		} else if (program < 1) {
 			this.program = 1;
 			System.out.println("Nie ma takiego programu. Ustawiono program: " + 1);
@@ -35,7 +35,7 @@ abstract public class Pralka {
 	}
 	
 	public void nextProgram() {
-		if (this.program >= maxProgram) {
+		if (this.program >= getMaxProgram()) {
 			this.program = 1;
 			System.out.println("Ustawiono program nr: " + 1);
 		} else {
@@ -46,8 +46,8 @@ abstract public class Pralka {
 	
 	public void previousProgram() {
 		if (program == 1) {
-			this.program = maxProgram;
-			System.out.println("Ustawiono program nr: " + maxProgram);
+			this.program = getMaxProgram();
+			System.out.println("Ustawiono program nr: " + getMaxProgram());
 		} else {
 			this.program = program -= 1;
 			System.out.println("Ustawiono program nr: " + this.program);
@@ -59,12 +59,12 @@ abstract public class Pralka {
 	}
 	
 	public void setTemp(double t) {
-		if (t <= maxTemp && t >= 0) {
+		if (t <= getMaxTemp() && t >= 0) {
 			this.temp = roundTemp(t);
 			System.out.println("Ustawiono temperature: " + this.temp + getStopien() + "C");
-		} else if (t > maxTemp) {
-			this.temp = maxTemp;
-			System.out.println("Ustawiono za wysoką temperaturę! Maksymalna temp: " + maxTemp + getStopien() + "C");
+		} else if (t > getMaxTemp()) {
+			this.temp = getMaxTemp();
+			System.out.println("Ustawiono za wysoką temperaturę! Maksymalna temp: " + getMaxTemp() + getStopien() + "C");
 		} else if (t < 0) {
 			this.temp = 0;
 			System.out.println("Ustawiono za niską temperaturę! Minimalna temp: " + 0 + getStopien() + "C");
@@ -79,13 +79,13 @@ abstract public class Pralka {
 	
 	public void tempUp() {
 		try {
-			if (this.temp >= maxTemp) {
+			if (this.temp >= getMaxTemp()) {
 				throw new TempException();
 			}
-			this.temp += skokTemp;
+			this.temp += getSkokTemp();
 			System.out.println("Obecna temperatura wynosi: " + this.temp + getStopien() + "C");
 		} catch (TempException e) {
-			System.out.println(e.getMessage() + " Nie można zwiększyć temperatury. Maksymalna temperatura wynosi: " + maxTemp + getStopien() + "C");
+			System.out.println(e.getMessage() + " Nie można zwiększyć temperatury. Maksymalna temperatura wynosi: " + getMaxTemp() + getStopien() + "C");
 		}
 	}
 	
@@ -94,7 +94,7 @@ abstract public class Pralka {
 			if (this.temp <= 0) {
 				throw new TempException();
 			}
-			this.temp -= skokTemp;
+			this.temp -= getSkokTemp();
 			System.out.println("Obecna temperatura wynosi: " + this.temp + getStopien() + "C");
 		} catch (TempException e) {
 			System.out.println(e.getMessage() + " Nie można obnizyć temperatury. Minimalna temperatura wynosi: " + 0 + getStopien() + "C");
@@ -106,9 +106,9 @@ abstract public class Pralka {
 	}
 	
 	public void setSpinning(int w) {
-		if (w > maxSpinning) {
-			this.spinning = maxSpinning;
-			System.out.println("Ustawiono za wysokie obroty! Maksymalne obroty: " + maxSpinning);
+		if (w > getMaxSpinning()) {
+			this.spinning = getMaxSpinning();
+			System.out.println("Ustawiono za wysokie obroty! Maksymalne obroty: " + getMaxSpinning());
 			
 		} else if (w < 0) {
 			this.spinning = 0;
@@ -126,7 +126,7 @@ abstract public class Pralka {
 	}
 	
 	public void spinUp() {
-		if (this.spinning == maxSpinning) {
+		if (this.spinning == getMaxSpinning()) {
 			this.spinning = 0;
 		} else {
 			this.spinning += 100;
@@ -136,7 +136,7 @@ abstract public class Pralka {
 	
 	public void spinDown() {
 		if (this.spinning == 0) {
-			this.spinning = maxSpinning;
+			this.spinning = getMaxSpinning();
 		} else {
 			this.spinning -= 100;
 		}
@@ -144,7 +144,7 @@ abstract public class Pralka {
 	}
 	
 	public void showStatus() {
-		System.out.println("Marka: " + brand);
+		System.out.println("Marka: " + getBrand());
 		System.out.println("Program: " + getProgram());
 		System.out.println("Temperatura: " + getTemp() + getStopien() + "C");
 		System.out.println("Wirowanie: " + getSpinning());
@@ -153,15 +153,43 @@ abstract public class Pralka {
 	
 	@Override
 	public String toString() {
-		return "Brand = " + brand;
+		return "Brand = " + getBrand();
 	}
 	
 	public Typ getBrand() {
 		return brand;
 	}
-
+	
 	public char getStopien() {
 		return stopien;
+	}
+	
+	public double getMaxTemp() {
+		return maxTemp;
+	}
+	
+	public int getMaxProgram() {
+		return maxProgram;
+	}
+	
+	public void setMaxProgram(int maxProgram) {
+		this.maxProgram = maxProgram;
+	}
+	
+	public int getMaxSpinning() {
+		return maxSpinning;
+	}
+	
+	public double getSkokTemp() {
+		return skokTemp;
+	}
+	
+	public void setSkokTemp(double skokTemp) {
+		this.skokTemp = skokTemp;
+	}
+	
+	public void setBrand(Typ brand) {
+		this.brand = brand;
 	}
 	
 }

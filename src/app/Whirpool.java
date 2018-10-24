@@ -4,8 +4,8 @@ public class Whirpool extends Pralka {
 	
 	public Whirpool() {
 		super();
-		super.maxProgram = 25;
-		super.brand = (Typ.WHIRPOOL);
+		super.setMaxProgram(25);
+		super.setBrand(Typ.WHIRPOOL);
 	}
 	
 }

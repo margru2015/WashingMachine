@@ -4,8 +4,8 @@ public class Beko extends Pralka {
 	
 	public Beko() {
 		super();
-		super.skokTemp = 1.0;
-		super.brand = (Typ.BEKO);
+		super.setSkokTemp(1.0);
+		super.setBrand(Typ.BEKO);
 	}
 	
 	@Override
