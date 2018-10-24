@@ -3,17 +3,17 @@ package app;
 abstract public class Pralka {
 	
 	private int				program;
-	private int				maxProgram	= 20;
 	private double			temp;
 	private int				spinning;
 	private double			skokTemp	= 0.5;
 	private Typ				brand;
-	final private int		maxSpinning	= 1000;
-	final private double	maxTemp		= 90;
-	final private char		stopien		= 186;
+	private int				maxProgram	= 20;
 	final private int		minProgram	= 1;
-	final private double	minTemp		= 0;
+	final private int		maxSpinning	= 1000;
 	final private int		minSpinning	= 0;
+	final private double	maxTemp		= 90;
+	final private double	minTemp		= 0;
+	final private char		stopien		= 186;
 	
 	public Pralka() {
 		
