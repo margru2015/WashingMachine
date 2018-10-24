@@ -24,7 +24,7 @@ abstract public class Pralka {
 	}
 	
 	public void setProgram(int program) {
-		if (program <= getMaxProgram() && program > 0) {
+		if (program <= getMaxProgram() && program >= getMinProgram()) {
 			this.program = program;
 			System.out.println("Ustawiono program: " + this.program);
 		} else if (program > getMaxProgram()) {
