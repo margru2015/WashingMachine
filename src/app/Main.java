@@ -65,7 +65,7 @@ public class Main {
 						.name()
 						.compareTo(s1.getBrand()
 								.name()))
-				.forEach(System.out::println);
+				.forEach(s -> System.out.println(s.toString()));
 		
 	}
 	
