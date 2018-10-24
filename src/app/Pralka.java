@@ -11,6 +11,9 @@ abstract public class Pralka {
 	final private int		maxSpinning	= 1000;
 	final private double	maxTemp		= 90;
 	final private char		stopien		= 186;
+	final private int		minProgram	= 1;
+	final private double	minTemp		= 0;
+	final private int		minSpinning	= 0;
 	
 	public Pralka() {
 		
@@ -27,17 +30,17 @@ abstract public class Pralka {
 		} else if (program > getMaxProgram()) {
 			this.program = getMaxProgram();
 			System.out.println("Przekroczono maksymalna liczbe programow. Ustawiono program: " + getMaxProgram());
-		} else if (program < 1) {
-			this.program = 1;
-			System.out.println("Nie ma takiego programu. Ustawiono program: " + 1);
+		} else if (program < getMinProgram()) {
+			this.program = getMinProgram();
+			System.out.println("Nie ma takiego programu. Ustawiono program: " + getMinProgram());
 			
 		}
 	}
 	
 	public void nextProgram() {
 		if (this.program >= getMaxProgram()) {
-			this.program = 1;
-			System.out.println("Ustawiono program nr: " + 1);
+			this.program = getMinProgram();
+			System.out.println("Ustawiono program nr: " + getMinProgram());
 		} else {
 			this.program = program++;
 			System.out.println("Ustawiono program nr: " + this.program);
@@ -45,11 +48,11 @@ abstract public class Pralka {
 	}
 	
 	public void previousProgram() {
-		if (program == 1) {
+		if (program == getMinProgram()) {
 			this.program = getMaxProgram();
 			System.out.println("Ustawiono program nr: " + getMaxProgram());
 		} else {
-			this.program = program -= 1;
+			this.program = program -= getMinProgram();
 			System.out.println("Ustawiono program nr: " + this.program);
 		}
 	}
@@ -59,15 +62,15 @@ abstract public class Pralka {
 	}
 	
 	public void setTemp(double t) {
-		if (t <= getMaxTemp() && t >= 0) {
+		if (t <= getMaxTemp() && t >= getMinTemp()) {
 			this.temp = roundTemp(t);
 			System.out.println("Ustawiono temperature: " + this.temp + getStopien() + "C");
 		} else if (t > getMaxTemp()) {
 			this.temp = getMaxTemp();
 			System.out.println("Ustawiono za wysoką temperaturę! Maksymalna temp: " + getMaxTemp() + getStopien() + "C");
-		} else if (t < 0) {
-			this.temp = 0;
-			System.out.println("Ustawiono za niską temperaturę! Minimalna temp: " + 0 + getStopien() + "C");
+		} else if (t < getMinTemp()) {
+			this.temp = getMinTemp();
+			System.out.println("Ustawiono za niską temperaturę! Minimalna temp: " + getMinTemp() + getStopien() + "C");
 			
 		}
 	}
@@ -91,13 +94,13 @@ abstract public class Pralka {
 	
 	public void tempDown() {
 		try {
-			if (this.temp <= 0) {
+			if (this.temp <= getMinTemp()) {
 				throw new TempException();
 			}
 			this.temp -= getSkokTemp();
 			System.out.println("Obecna temperatura wynosi: " + this.temp + getStopien() + "C");
 		} catch (TempException e) {
-			System.out.println(e.getMessage() + " Nie można obnizyć temperatury. Minimalna temperatura wynosi: " + 0 + getStopien() + "C");
+			System.out.println(e.getMessage() + " Nie można obnizyć temperatury. Minimalna temperatura wynosi: " + getMinTemp() + getStopien() + "C");
 		}
 	}
 	
@@ -110,8 +113,8 @@ abstract public class Pralka {
 			this.spinning = getMaxSpinning();
 			System.out.println("Ustawiono za wysokie obroty! Maksymalne obroty: " + getMaxSpinning());
 			
-		} else if (w < 0) {
-			this.spinning = 0;
+		} else if (w < getMinSpinning()) {
+			this.spinning = getMinSpinning();
 			System.out.println("Ustawiono za niskie obroty! Wirowanie wyłączone");
 		} else {
 			int v = roundSpin(w);
@@ -127,7 +130,7 @@ abstract public class Pralka {
 	
 	public void spinUp() {
 		if (this.spinning == getMaxSpinning()) {
-			this.spinning = 0;
+			this.spinning = getMinSpinning();
 		} else {
 			this.spinning += 100;
 		}
@@ -135,7 +138,7 @@ abstract public class Pralka {
 	}
 	
 	public void spinDown() {
-		if (this.spinning == 0) {
+		if (this.spinning == getMinSpinning()) {
 			this.spinning = getMaxSpinning();
 		} else {
 			this.spinning -= 100;
@@ -190,6 +193,18 @@ abstract public class Pralka {
 	
 	public void setBrand(Typ brand) {
 		this.brand = brand;
+	}
+	
+	public int getMinProgram() {
+		return minProgram;
+	}
+	
+	public double getMinTemp() {
+		return minTemp;
+	}
+	
+	public int getMinSpinning() {
+		return minSpinning;
 	}
 	
 }
