@@ -153,7 +153,7 @@ abstract public class Pralka {
 	
 	@Override
 	public String toString() {
-		return "[brand=" + brand + "]";
+		return "Brand = " + brand;
 	}
 	
 	public Typ getBrand() {
